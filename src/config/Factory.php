@@ -18,6 +18,9 @@ namespace satframework\config;
 class Factory
 {
 
+    /**
+     * @var mixed|string
+     */
     private $cli_param = null;
 
     private $base = '';
