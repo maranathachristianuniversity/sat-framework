@@ -1,21 +1,21 @@
 <?php
 /**
- * pukoframework.
+ * satframework.
  * MVC PHP Framework for quick and fast PHP Application Development.
- * Copyright (c) 2016, Didit Velliz
+ * Copyright (c) 2020, IT Maranatha
  *
  * @author Didit Velliz
- * @link https://github.com/velliz/pukoframework
- * @since Version 1.1.3
+ * @link https://github.com/maranathachristianuniversity/sat-framework
+ * @since Version 0.9.3
  */
 
-namespace pukoframework\config;
+namespace satframework\config;
 
-use pukoframework\Framework;
+use satframework\Framework;
 
 /**
  * Class Config
- * @package pukoframework\config
+ * @package satframework\config
  */
 class Config
 {

@@ -1,33 +1,33 @@
 <?php
 /**
- * pukoframework.
+ * satframework.
  * MVC PHP Framework for quick and fast PHP Application Development.
- * Copyright (c) 2016, Didit Velliz
+ * Copyright (c) 2020, IT Maranatha
  *
  * @author Didit Velliz
- * @link https://github.com/velliz/pukoframework
- * @since Version 1.0.2
+ * @link https://github.com/maranathachristianuniversity/sat-framework
+ * @since Version 0.9.3
  */
 
-namespace pukoframework\peh;
+namespace satframework\peh;
 
 use Exception;
 use pte\CustomRender;
 use pte\exception\PteException as PteExceptionAlias;
 use pte\exception\PteException;
 use pte\Pte;
-use pukoframework\Framework;
-use pukoframework\log\LoggerAwareInterface;
-use pukoframework\log\LoggerInterface;
-use pukoframework\log\LogLevel;
-use pukoframework\Response;
+use satframework\Framework;
+use satframework\log\LoggerAwareInterface;
+use satframework\log\LoggerInterface;
+use satframework\log\LogLevel;
+use satframework\Response;
 
 /**
  * Class ThrowView
- * @package pukoframework\peh
+ * @package satframework\peh
  */
 class ThrowView extends Exception implements
-    PukoException, CustomRender, LoggerAwareInterface
+    SatException, CustomRender, LoggerAwareInterface
 {
     /**
      * @var Pte
@@ -67,7 +67,7 @@ class ThrowView extends Exception implements
      */
     public function __construct($message, Response $response)
     {
-        parent::__construct($message, PukoException::view);
+        parent::__construct($message, SatException::view);
 
         $this->system_html = Framework::$factory->getRoot() . '/assets/system/';
         $this->message = $message;
@@ -83,7 +83,7 @@ class ThrowView extends Exception implements
      */
     public function ExceptionHandler($error)
     {
-        $emg['ErrorCode'] = PukoException::value;
+        $emg['ErrorCode'] = SatException::value;
         $emg['Message'] = $error->getMessage();
         $emg['File'] = $error->getFile();
         $emg['LineNumber'] = $error->getLine();

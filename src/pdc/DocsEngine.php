@@ -1,23 +1,23 @@
 <?php
 /**
- * pukoframework.
+ * satframework.
  * MVC PHP Framework for quick and fast PHP Application Development.
- * Copyright (c) 2016, Didit Velliz
+ * Copyright (c) 2020, IT Maranatha
  *
  * @author Didit Velliz
- * @link https://github.com/velliz/pukoframework
- * @since Version 1.1.0
+ * @link https://github.com/maranathachristianuniversity/sat-framework
+ * @since Version 0.9.3
  */
 
-namespace pukoframework\pdc;
+namespace satframework\pdc;
 
 use Error;
 use Exception;
-use pukoframework\Response;
+use satframework\Response;
 
 /**
  * Class DocsEngine
- * @package pukoframework\pdc
+ * @package satframework\pdc
  */
 class DocsEngine
 {
@@ -68,7 +68,6 @@ class DocsEngine
                 foreach ($preg as $k => $v) {
                     switch ($k) {
                         case 0:
-                            break;
                         case 1:
                             break;
                         default:
@@ -81,7 +80,7 @@ class DocsEngine
                     }
                 }
                 try {
-                    $class = '\\pukoframework\\pdc\\' . $this->clause;
+                    $class = '\\satframework\\pdc\\' . $this->clause;
                     $this->class = new $class();
                     $this->class->SetCommand($this->clause, $this->command, $this->value);
                     $returns = $this->class->SetStrategy($this->response_objects);
@@ -89,7 +88,7 @@ class DocsEngine
                         $this->return_command = array_merge($this->return_command, $returns);
                     }
                 } catch (Error $error) {
-                    $false = "Puko Error (PTE001) PTE Command <b>#%s %s %s</b> unregistered.";
+                    $false = "SAT Error (PTE001) PTE Command <b>#%s %s %s</b> unregistered.";
                     $false = sprintf($false, $this->clause, $this->command, $this->value);
                     throw new Exception($false);
                 }

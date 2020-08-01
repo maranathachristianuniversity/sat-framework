@@ -1,14 +1,23 @@
 <?php
+/**
+ * satframework.
+ * MVC PHP Framework for quick and fast PHP Application Development.
+ * Copyright (c) 2020, IT Maranatha
+ *
+ * @author Didit Velliz
+ * @link https://github.com/maranathachristianuniversity/sat-framework
+ * @since Version 0.9.3
+ */
 
-namespace pukoframework\plugins;
+namespace satframework\plugins;
 
 use Exception;
-use pukoframework\pda\DBI;
-use pukoframework\Request;
+use satframework\pda\DBI;
+use satframework\Request;
 
 /**
  * Class DataTables.
- * @package pukoframework\plugins
+ * @package satframework\plugins
  *
  * @copyright DV 2016 - 2019
  * @author Didit Velliz diditvelliz@gmail.com

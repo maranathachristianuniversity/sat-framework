@@ -1,16 +1,19 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: didit
- * Date: 8/22/2018
- * Time: 10:56 PM
+ * satframework.
+ * MVC PHP Framework for quick and fast PHP Application Development.
+ * Copyright (c) 2020, IT Maranatha
+ *
+ * @author Didit Velliz
+ * @link https://github.com/maranathachristianuniversity/sat-framework
+ * @since Version 0.9.3
  */
 
-namespace pukoframework\log;
+namespace satframework\log;
 
 /**
  * Interface LoggerAwareInterface
- * @package pukoframework\log
+ * @package satframework\log
  */
 interface LoggerAwareInterface
 {

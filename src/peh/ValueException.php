@@ -1,22 +1,22 @@
 <?php
 /**
- * pukoframework.
+ * satframework.
  * MVC PHP Framework for quick and fast PHP Application Development.
- * Copyright (c) 2016, Didit Velliz
+ * Copyright (c) 2020, IT Maranatha
  *
  * @author Didit Velliz
- * @link https://github.com/velliz/pukoframework
- * @since Version 1.0.2
+ * @link https://github.com/maranathachristianuniversity/sat-framework
+ * @since Version 0.9.3
  */
 
-namespace pukoframework\peh;
+namespace satframework\peh;
 
 use Exception;
-use pukoframework\auth\Session;
+use satframework\auth\Session;
 
 /**
  * Class ValueException
- * @package pukoframework\peh
+ * @package satframework\peh
  */
 class ValueException extends Exception
 {
@@ -33,7 +33,7 @@ class ValueException extends Exception
      */
     public function __construct($message = '', $validate = array())
     {
-        parent::__construct($message, PukoException::value);
+        parent::__construct($message, SatException::value);
         $this->validation = $validate;
     }
 

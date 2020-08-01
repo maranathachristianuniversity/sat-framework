@@ -1,21 +1,21 @@
 <?php
 /**
- * pukoframework.
+ * satframework.
  * MVC PHP Framework for quick and fast PHP Application Development.
- * Copyright (c) 2016, Didit Velliz
+ * Copyright (c) 2020, IT Maranatha
  *
  * @author Didit Velliz
- * @link https://github.com/velliz/pukoframework
- * @since Version 1.1.0
+ * @link https://github.com/maranathachristianuniversity/sat-framework
+ * @since Version 0.9.3
  */
 
-namespace pukoframework\pdc;
+namespace satframework\pdc;
 
-use pukoframework\Response;
+use satframework\Response;
 
 /**
  * Class DisplayException
- * @package pukoframework\pdc
+ * @package satframework\pdc
  */
 class DisplayException implements Pdc
 {

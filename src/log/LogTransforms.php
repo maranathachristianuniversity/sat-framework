@@ -1,22 +1,23 @@
 <?php
 /**
- * pukoframework.
+ * satframework.
  * MVC PHP Framework for quick and fast PHP Application Development.
- * Copyright (c) 2016, Didit Velliz
+ * Copyright (c) 2020, IT Maranatha
  *
  * @author Didit Velliz
- * @link https://github.com/velliz/pukoframework
- * @since Version 1.1.5
+ * @link https://github.com/maranathachristianuniversity/sat-framework
+ * @since Version 0.9.3
  */
-namespace pukoframework\log;
 
-use pukoframework\config\Config;
-use pukoframework\Framework;
-use pukoframework\plugins\CurlRequest;
+namespace satframework\log;
+
+use satframework\config\Config;
+use satframework\Framework;
+use satframework\plugins\CurlRequest;
 
 /**
  * Trait LogTransforms
- * @package pukoframework\log
+ * @package satframework\log
  */
 trait LogTransforms
 {

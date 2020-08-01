@@ -1,24 +1,24 @@
 <?php
 /**
- * pukoframework.
+ * satframework.
  * MVC PHP Framework for quick and fast PHP Application Development.
- * Copyright (c) 2016, Didit Velliz
+ * Copyright (c) 2020, IT Maranatha
  *
  * @author Didit Velliz
- * @link https://github.com/velliz/pukoframework
- * @since Version 1.0.3
+ * @link https://github.com/maranathachristianuniversity/sat-framework
+ * @since Version 0.9.3
  */
 
-namespace pukoframework\middleware;
+namespace satframework\middleware;
 
 use Exception;
-use pukoframework\log\LoggerInterface;
-use pukoframework\log\LogLevel;
-use pukoframework\log\LogTransforms;
+use satframework\log\LoggerInterface;
+use satframework\log\LogLevel;
+use satframework\log\LogTransforms;
 
 /**
  * Class Controller
- * @package pukoframework\pte
+ * @package satframework\pte
  */
 abstract class Controller implements LoggerInterface
 {

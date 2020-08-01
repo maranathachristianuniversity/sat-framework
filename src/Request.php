@@ -1,21 +1,21 @@
 <?php
 /**
- * pukoframework.
+ * satframework.
  * MVC PHP Framework for quick and fast PHP Application Development.
- * Copyright (c) 2016, Didit Velliz
+ * Copyright (c) 2020, IT Maranatha
  *
  * @author Didit Velliz
- * @link https://github.com/velliz/pukoframework
- * @since Version 0.9.2
+ * @link https://github.com/maranathachristianuniversity/sat-framework
+ * @since Version 0.9.3
  */
 
-namespace pukoframework;
+namespace satframework;
 
 use Exception;
 
 /**
  * Class Request
- * @package pukoframework
+ * @package satframework
  */
 class Request extends Routes
 {

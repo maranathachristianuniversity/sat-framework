@@ -1,29 +1,29 @@
 <?php
 /**
- * pukoframework.
+ * satframework.
  * MVC PHP Framework for quick and fast PHP Application Development.
- * Copyright (c) 2016, Didit Velliz
+ * Copyright (c) 2020, IT Maranatha
  *
  * @author Didit Velliz
- * @link https://github.com/velliz/pukoframework
- * @since Version 1.1.0
+ * @link https://github.com/maranathachristianuniversity/sat-framework
+ * @since Version 0.9.3
  */
 
-namespace pukoframework\pdc;
+namespace satframework\pdc;
 
 use Exception;
 use pte\CustomRender;
 use pte\exception\PteException;
 use pte\Pte;
-use pukoframework\auth\Bearer;
-use pukoframework\auth\Cookies;
-use pukoframework\auth\Session;
-use pukoframework\Framework;
-use pukoframework\Response;
+use satframework\auth\Bearer;
+use satframework\auth\Cookies;
+use satframework\auth\Session;
+use satframework\Framework;
+use satframework\Response;
 
 /**
  * Class Auth
- * @package pukoframework\pdc
+ * @package satframework\pdc
  */
 class Auth implements Pdc, CustomRender
 {

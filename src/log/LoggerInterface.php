@@ -1,10 +1,10 @@
 <?php
 
-namespace pukoframework\log;
+namespace satframework\log;
 
 /**
  * Interface LoggerInterface
- * @package pukoframework\log
+ * @package satframework\log
  */
 interface LoggerInterface
 {

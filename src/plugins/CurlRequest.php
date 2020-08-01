@@ -1,16 +1,19 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: didit
- * Date: 12/7/2018
- * Time: 1:59 PM
+ * satframework.
+ * MVC PHP Framework for quick and fast PHP Application Development.
+ * Copyright (c) 2020, IT Maranatha
+ *
+ * @author Didit Velliz
+ * @link https://github.com/maranathachristianuniversity/sat-framework
+ * @since Version 0.9.3
  */
 
-namespace pukoframework\plugins;
+namespace satframework\plugins;
 
 /**
  * Class CurlRequest
- * @package pukoframework\plugins
+ * @package satframework\plugins
  *
  * @copyright DV 2018
  * @author Didit Velliz diditvelliz@gmail.com
@@ -76,7 +79,7 @@ class CurlRequest
         curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
         curl_setopt($curl, CURLOPT_URL, $this->service);
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $this->method);
-        curl_setopt($curl, CURLOPT_USERAGENT, 'Puko Framework CURL');
+        curl_setopt($curl, CURLOPT_USERAGENT, 'SAT Framework CURL');
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
         if ($type === CurlRequest::JSON) {

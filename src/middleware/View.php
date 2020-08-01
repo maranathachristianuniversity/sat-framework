@@ -1,15 +1,24 @@
 <?php
+/**
+ * satframework.
+ * MVC PHP Framework for quick and fast PHP Application Development.
+ * Copyright (c) 2020, IT Maranatha
+ *
+ * @author Didit Velliz
+ * @link https://github.com/maranathachristianuniversity/sat-framework
+ * @since Version 0.9.3
+ */
 
-namespace pukoframework\middleware;
+namespace satframework\middleware;
 
 use pte\CustomRender;
-use pukoframework\Framework;
-use pukoframework\peh\ThrowView;
-use pukoframework\Response;
+use satframework\Framework;
+use satframework\peh\ThrowView;
+use satframework\Response;
 
 /**
  * Class View
- * @package pukoframework\middleware
+ * @package satframework\middleware
  */
 class View extends Controller implements CustomRender
 {

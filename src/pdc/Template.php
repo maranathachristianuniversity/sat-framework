@@ -1,25 +1,25 @@
 <?php
 /**
- * pukoframework.
+ * satframework.
  * MVC PHP Framework for quick and fast PHP Application Development.
- * Copyright (c) 2016, Didit Velliz
+ * Copyright (c) 2020, IT Maranatha
  *
  * @author Didit Velliz
- * @link https://github.com/velliz/pukoframework
- * @since Version 1.1.0
+ * @link https://github.com/maranathachristianuniversity/sat-framework
+ * @since Version 0.9.3
  */
 
-namespace pukoframework\pdc;
+namespace satframework\pdc;
 
 use Exception;
 use Memcached;
 use pte\PteCache;
-use pukoframework\config\Config;
-use pukoframework\Response;
+use satframework\config\Config;
+use satframework\Response;
 
 /**
  * Class Template
- * @package pukoframework\pdc
+ * @package satframework\pdc
  */
 class Template implements Pdc, PteCache
 {

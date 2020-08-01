@@ -34,7 +34,7 @@ branches:
   only: master
 
 notifications:
-  email: "diditvelliz@gmail.com"
+  email: "dwa.admin@gmail.com"
   on_success: never
   on_failure: always
 

@@ -1,35 +1,35 @@
 <?php
 /**
- * pukoframework.
+ * satframework.
  * MVC PHP Framework for quick and fast PHP Application Development.
- * Copyright (c) 2016, Didit Velliz
+ * Copyright (c) 2020, IT Maranatha
  *
  * @author Didit Velliz
- * @link https://github.com/velliz/pukoframework
- * @since Version 0.9.0
+ * @link https://github.com/maranathachristianuniversity/sat-framework
+ * @since Version 0.9.3
  */
 
-namespace pukoframework;
+namespace satframework;
 
 use Exception;
 use pte\exception\PteException;
 use pte\Pte;
-use pukoframework\config\Config;
-use pukoframework\config\Factory;
-use pukoframework\middleware\Console;
-use pukoframework\pdc\DocsEngine;
-use pukoframework\middleware\Service;
-use pukoframework\middleware\View;
-use pukoframework\peh\ThrowConsole;
-use pukoframework\peh\ThrowService;
-use pukoframework\peh\ThrowView;
-use pukoframework\plugins\LanguageBinders;
+use satframework\config\Config;
+use satframework\config\Factory;
+use satframework\middleware\Console;
+use satframework\pdc\DocsEngine;
+use satframework\middleware\Service;
+use satframework\middleware\View;
+use satframework\peh\ThrowConsole;
+use satframework\peh\ThrowService;
+use satframework\peh\ThrowView;
+use satframework\plugins\LanguageBinders;
 use ReflectionClass;
 use ReflectionException;
 
 /**
  * Class Framework
- * @package pukoframework
+ * @package satframework
  */
 class Framework
 {
@@ -105,7 +105,7 @@ class Framework
         set_error_handler(array($e, 'ErrorHandler'));
 
         if (!$factory instanceof Factory) {
-            throw new Exception('Puko Fatal Error (CF001): Factory must set.');
+            throw new Exception('SAT Fatal Error (CF001): Factory must set.');
         }
         self::$factory = $factory;
 
@@ -184,7 +184,7 @@ class Framework
                 }
             } else {
                 $error = sprintf(
-                    'Puko Fatal Error (FW001) Function %s must set public.',
+                    'SAT Fatal Error (FW001) Function %s must set public.',
                     $this->request->fnName
                 );
                 if ($this->pdc->isSubclassOf($view)) {
@@ -200,7 +200,7 @@ class Framework
             }
         } else {
             $error = sprintf(
-                'Puko Fatal Error (FW002) Function %s not found in class: %s',
+                'SAT Fatal Error (FW002) Function %s not found in class: %s',
                 $this->request->fnName,
                 $this->request->controllerName
             );

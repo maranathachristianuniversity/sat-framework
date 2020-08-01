@@ -1,28 +1,28 @@
 <?php
 /**
- * pukoframework.
+ * satframework.
  * MVC PHP Framework for quick and fast PHP Application Development.
- * Copyright (c) 2016, Didit Velliz
+ * Copyright (c) 2020, IT Maranatha
  *
  * @author Didit Velliz
- * @link https://github.com/velliz/pukoframework
- * @since Version 1.0.2
+ * @link https://github.com/maranathachristianuniversity/sat-framework
+ * @since Version 0.9.3
  */
 
-namespace pukoframework\peh;
+namespace satframework\peh;
 
 use Exception;
-use pukoframework\Framework;
-use pukoframework\log\LoggerAwareInterface;
-use pukoframework\log\LoggerInterface;
-use pukoframework\log\LogLevel;
+use satframework\Framework;
+use satframework\log\LoggerAwareInterface;
+use satframework\log\LoggerInterface;
+use satframework\log\LogLevel;
 
 /**
  * Class ThrowService
- * @package pukoframework\peh
+ * @package satframework\peh
  */
 class ThrowService extends Exception
-    implements PukoException, LoggerAwareInterface
+    implements SatException, LoggerAwareInterface
 {
 
     /**
@@ -36,13 +36,13 @@ class ThrowService extends Exception
     var $logger;
 
     /**
-     * PukoException constructor.
+     * SatException constructor.
      * @param string $message
      */
     public function __construct($message)
     {
         $this->message = $message;
-        parent::__construct($message, PukoException::service);
+        parent::__construct($message, SatException::service);
     }
 
     /**
@@ -50,14 +50,14 @@ class ThrowService extends Exception
      */
     public function ExceptionHandler($error)
     {
-        $emg['ErrorCode'] = PukoException::value;
+        $emg['ErrorCode'] = SatException::value;
         $emg['Message'] = $error->getMessage();
         $emg['File'] = $error->getFile();
         $emg['LineNumber'] = $error->getLine();
         $emg['Stacktrace'] = $error->getTrace();
 
         http_response_code(403);
-        header('Author: Puko Framework');
+        header('Author: SAT Framework');
         header('Content-Type: application/json');
 
         $exception = array(
@@ -101,7 +101,7 @@ class ThrowService extends Exception
         $emg['Stacktrace'] = $this->getTrace();
 
         http_response_code(500);
-        header('Author: Puko Framework');
+        header('Author: SAT Framework');
         header('Content-Type: application/json');
 
         $exception = array(

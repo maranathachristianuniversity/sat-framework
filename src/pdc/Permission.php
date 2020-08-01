@@ -1,29 +1,29 @@
 <?php
 /**
- * pukoframework.
+ * satframework.
  * MVC PHP Framework for quick and fast PHP Application Development.
- * Copyright (c) 2018, Didit Velliz
+ * Copyright (c) 2020, IT Maranatha
  *
  * @author Didit Velliz
- * @link https://github.com/velliz/pukoframework
- * @since Version 1.1.3
+ * @link https://github.com/maranathachristianuniversity/sat-framework
+ * @since Version 0.9.3
  */
 
-namespace pukoframework\pdc;
+namespace satframework\pdc;
 
 use Exception;
 use pte\exception\PteException;
 use pte\Pte;
-use pukoframework\auth\Bearer;
-use pukoframework\auth\Cookies;
-use pukoframework\auth\PukoAuth;
-use pukoframework\auth\Session;
-use pukoframework\Framework;
-use pukoframework\Response;
+use satframework\auth\Bearer;
+use satframework\auth\Cookies;
+use satframework\auth\SatAuth;
+use satframework\auth\Session;
+use satframework\Framework;
+use satframework\Response;
 
 /**
  * Class Permission
- * @package pukoframework\pdc
+ * @package satframework\pdc
  */
 class Permission implements Pdc
 {
@@ -36,7 +36,7 @@ class Permission implements Pdc
     var $provider;
 
     /**
-     * @var \pukoframework\auth\Auth
+     * @var \satframework\auth\Auth
      */
     var $classes;
 
@@ -44,7 +44,7 @@ class Permission implements Pdc
     var $permission;
 
     /**
-     * @var PukoAuth
+     * @var SatAuth
      */
     var $AuthClass;
 

@@ -6,28 +6,33 @@
   "license": "MIT",
   "authors": [
     {
-      "name": "velliz",
-      "email": "diditvelliz@outlook.com",
-      "homepage": "http://velliz.github.io",
-      "role": "Lead Developer"
+      "name": "IT Maranatha",
+      "email": "dwa.admin@gmail.com",
+      "homepage": "https://www.maranatha.edu",
+      "role": "Team Developer"
     }
   ],
   "repositories": [
     {
       "type": "git",
-      "url": "https://github.com/Velliz/pukoframework"
+      "url": "https://github.com/maranathachristianuniversity/sat-framework"
     }
   ],
   "require": {
     "php": ">=7.0",
-    "velliz/pte": "0.2.1"
+    "velliz/pte": "0.2.1",
+    "ext-openssl": "*",
+    "ext-json": "*",
+    "ext-pdo": "*",
+    "ext-memcached": "*",
+    "ext-curl": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "^6"
   },
   "autoload": {
     "psr-4": {
-      "pukoframework\\": "src/"
+      "satframework\\": "src/"
     }
   }
 }

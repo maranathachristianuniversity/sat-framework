@@ -1,22 +1,22 @@
 <?php
 /**
- * pukoframework.
+ * satframework.
  * MVC PHP Framework for quick and fast PHP Application Development.
- * Copyright (c) 2016, Didit Velliz
+ * Copyright (c) 2020, IT Maranatha
  *
  * @author Didit Velliz
- * @link https://github.com/velliz/pukoframework
+ * @link https://github.com/maranathachristianuniversity/sat-framework
  * @since Version 0.9.3
  */
 
-namespace pukoframework\auth;
+namespace satframework\auth;
 
 use Exception;
-use pukoframework\config\Config;
+use satframework\config\Config;
 
 /**
  * Class Cookies
- * @package pukoframework\auth
+ * @package satframework\auth
  *
  */
 class Cookies
@@ -144,7 +144,7 @@ class Cookies
     public function Login($username, $password, $expired = Auth::EXPIRED_1_HOUR)
     {
         $loginObject = $this->authentication->Login($username, $password);
-        if (!$loginObject instanceof PukoAuth) {
+        if (!$loginObject instanceof SatAuth) {
             throw new Exception('Auth must be object of PukoAuth instance');
         }
         if ($loginObject->secure === null) {

@@ -1,22 +1,22 @@
 <?php
 /**
- * pukoframework.
+ * satframework.
  * MVC PHP Framework for quick and fast PHP Application Development.
- * Copyright (c) 2016, Didit Velliz
+ * Copyright (c) 2020, IT Maranatha
  *
  * @author Didit Velliz
- * @link https://github.com/velliz/pukoframework
+ * @link https://github.com/maranathachristianuniversity/sat-framework
  * @since Version 0.9.3
  */
 
-namespace pukoframework\auth;
+namespace satframework\auth;
 
 use Exception;
-use pukoframework\config\Config;
+use satframework\config\Config;
 
 /**
  * Class Session
- * @package pukoframework\auth
+ * @package satframework\auth
  */
 class Session
 {
@@ -151,7 +151,7 @@ class Session
     public function Login($username, $password)
     {
         $loginObject = $this->authentication->Login($username, $password);
-        if (!$loginObject instanceof PukoAuth) {
+        if (!$loginObject instanceof SatAuth) {
             return false;
         }
         if ($loginObject->secure === null) {

@@ -1,24 +1,24 @@
 <?php
 /**
- * pukoframework.
+ * satframework.
  * MVC PHP Framework for quick and fast PHP Application Development.
- * Copyright (c) 2016, Didit Velliz
+ * Copyright (c) 2020, IT Maranatha
  *
  * @author Didit Velliz
- * @link https://github.com/velliz/pukoframework
+ * @link https://github.com/maranathachristianuniversity/sat-framework
  * @since Version 0.9.3
  */
 
-namespace pukoframework\auth;
+namespace satframework\auth;
 
 use DateTime;
 use Exception;
-use pukoframework\config\Config;
-use pukoframework\Request;
+use satframework\config\Config;
+use satframework\Request;
 
 /**
  * Class Bearer
- * @package pukoframework\auth
+ * @package satframework\auth
  *
  */
 class Bearer
@@ -33,6 +33,10 @@ class Bearer
 
     public static $bearerObject;
 
+    /**
+     * Bearer constructor.
+     * @param Auth $authentication
+     */
     private function __construct(Auth $authentication)
     {
         if (is_object(self::$bearerObject)) {
@@ -51,6 +55,10 @@ class Bearer
         $this->authentication = $authentication;
     }
 
+    /**
+     * @param Auth $authentication
+     * @return Bearer
+     */
     public static function Get(Auth $authentication)
     {
         if (is_object(self::$bearerObject)) {
@@ -59,6 +67,10 @@ class Bearer
         return self::$bearerObject = new Bearer($authentication);
     }
 
+    /**
+     * @param $string
+     * @return string
+     */
     private function Encrypt($string)
     {
         $key = hash('sha256', $this->key);
@@ -67,6 +79,10 @@ class Bearer
         return base64_encode($output);
     }
 
+    /**
+     * @param $string
+     * @return false|string
+     */
     private function Decrypt($string)
     {
         $key = hash('sha256', $this->key);
@@ -74,6 +90,9 @@ class Bearer
         return openssl_decrypt(base64_decode($string), $this->method, $key, 0, $iv);
     }
 
+    /**
+     * @return bool
+     */
     public static function Is()
     {
         $data = Request::getBearerToken();
@@ -95,7 +114,7 @@ class Bearer
     public function Login($username, $password)
     {
         $loginObject = $this->authentication->Login($username, $password);
-        if (!$loginObject instanceof PukoAuth) {
+        if (!$loginObject instanceof SatAuth) {
             return false;
         }
         if ($loginObject->secure === null) {
@@ -113,6 +132,9 @@ class Bearer
         return $secure;
     }
 
+    /**
+     * @return bool
+     */
     public function Logout()
     {
         return true;
