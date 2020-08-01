@@ -1,6 +1,6 @@
 {
   "name": "maranathachristianuniversity/sat-framework",
-  "description": "MVC framework for quick and fast PHP application development",
+  "description": "PHP MVC framework for quick and fast PHP application development",
   "type": "framework",
   "version": "1.1.8",
   "license": "MIT",
