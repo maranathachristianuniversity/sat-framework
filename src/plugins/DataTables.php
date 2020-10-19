@@ -76,6 +76,8 @@ class DataTables
         'error' => 'No data',
     ];
 
+    private $db_engine = 'mysql';
+
     /**
      * DataTables constructor.
      * @param string $verb
@@ -101,6 +103,11 @@ class DataTables
 
         // post, put, get etc...
         $this->http_verb = $verb;
+    }
+
+    public function SetDBEngine($engine = 'mysql')
+    {
+        $this->db_engine = $engine;
     }
 
     /**
@@ -130,6 +137,9 @@ class DataTables
         $this->raw_query = str_replace(';', '', $query);
 
         $sql = "SELECT ";
+        if($this->db_engine === 'sqlsrv') {
+            $sql = "SELECT TOP {$this->length} ";
+        }
         $sql .= "*";
         $sql .= " FROM ({$query}) ";
         $sql .= "TEMP ";
@@ -172,7 +182,9 @@ class DataTables
 
         $order = strtoupper($this->order_dir);
         $search_param .= " ORDER BY {$this->column_names[$this->order_index]} {$order}";
-        $search_param .= " LIMIT {$this->start}, {$this->length}";
+        if($this->db_engine === 'mysql') {
+            $search_param .= " LIMIT {$this->start},{$this->length}";
+        }
 
         $data = DBI::Prepare(($this->query . $search_param), $this->database)->GetData();
 

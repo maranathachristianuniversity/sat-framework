@@ -45,6 +45,7 @@ class DBI
      * @var bool
      */
     private $cache = false;
+    private $cacheExpiry = 60;
 
     private $queryPattern = '#@([0-9]+)#';
 
@@ -60,7 +61,6 @@ class DBI
         $this->dbName = $connection[$database]['dbName'];
         $this->username = $connection[$database]['user'];
         $this->password = $connection[$database]['pass'];
-        $this->cache = $connection[$database]['cache'];
     }
 
     /**
@@ -77,10 +77,21 @@ class DBI
         }
 
         $this->DBISet(Config::Data('database'), $database);
+
         //todo: change this to support another databases
-        $pdoConnection = "$this->dbType:host=$this->host;port=$this->port";
-        if ($this->dbName !== '') {
-            $pdoConnection = "$this->dbType:host=$this->host;port=$this->port;dbname=$this->dbName";
+        $pdoConnection = null;
+        if ($this->dbType === 'mysql') {
+            $pdoConnection = "$this->dbType:host=$this->host;port=$this->port";
+            if ($this->dbName !== '') {
+                $pdoConnection = "$this->dbType:host=$this->host;port=$this->port;dbname=$this->dbName";
+            }
+        }
+        if ($this->dbType === 'sqlsrv') {
+            //connection from pdo_odbc
+            $pdoConnection = "odbc:Driver={SQL Server};Server=$this->host";
+            if ($this->dbName !== '') {
+                $pdoConnection = "odbc:Driver={SQL Server};Server=$this->host;Database=$this->dbName";
+            }
         }
 
         try {
@@ -91,6 +102,18 @@ class DBI
             throw new Exception("Connection failed: " . $ex->getMessage());
         }
     }
+
+    /**
+     * @param int $timeInSeconds
+     * @return $this
+     */
+    public function CacheFor($timeInSeconds = 60)
+    {
+        $this->cache = true;
+        $this->cacheExpiry = $timeInSeconds;
+        return $this;
+    }
+
 
     /**
      * @param $query string
@@ -107,11 +130,12 @@ class DBI
     }
 
     /**
-     * @param $array
+     * @param array $array
+     * @param string $identity
      * @return bool|string
      * @throws Exception
      */
-    public function Save($array)
+    public function Save($array = [], $identity = '')
     {
         $keys = $values = [];
         $insert_text = "INSERT INTO $this->query";
@@ -121,10 +145,18 @@ class DBI
         }
         $key_string = "(";
         foreach ($keys as $key) {
-            $key_string = $key_string . "`" . $key . "`, ";
+            if ($this->dbType === 'mysql') {
+                $key_string = $key_string . "`" . $key . "`, ";
+            } else {
+                $key_string = $key_string . " " . $key . ", ";
+            }
         }
         $key_string = substr($key_string, 0, -2);
-        $insert_text = $insert_text . " " . $key_string . ")";
+        if ($this->dbType === 'sqlsrv') {
+            $insert_text = $insert_text . " " . $key_string . ") OUTPUT INSERTED.{$identity}";
+        } else {
+            $insert_text = $insert_text . " " . $key_string . ")";
+        }
         $insert_text = $insert_text . " VALUES ";
         $value_string = "(";
         foreach ($keys as $key) {
@@ -139,7 +171,13 @@ class DBI
                 $statement->bindValue(':' . $key, $values[$no]);
             }
             if ($statement->execute()) {
-                $lastid = self::$dbi->lastInsertId();
+                if ($this->dbType === 'mysql') {
+                    $lastid = self::$dbi->lastInsertId();
+                }
+                if ($this->dbType === 'sqlsrv') {
+                    $result = $statement->fetch(PDO::FETCH_ASSOC);
+                    $lastid = $result[$identity];
+                }
                 self::$dbi = null;
                 return $lastid;
             } else {
@@ -162,12 +200,16 @@ class DBI
     {
         $del_text = "DELETE FROM $this->query WHERE ";
         foreach ($arrWhere as $col => $value) {
-            $del_text .= "`" . $col . "`" . " = '" . $value . "' AND ";
+            if ($this->dbType === 'mysql') {
+                $del_text .= "`" . $col . "`" . " = '" . $value . "' AND ";
+            } else {
+                $del_text .= $col . " = " . $value . " AND ";
+            }
         }
         $del_text = substr($del_text, 0, -4);
         try {
             $statement = self::$dbi->prepare($del_text);
-            $result = $statement->execute($arrWhere);
+            $result = $statement->execute();
             self::$dbi = null;
             return $result;
         } catch (PDOException $ex) {
@@ -221,6 +263,7 @@ class DBI
      */
     public function GetData()
     {
+        $memcached = $keys = null;
         if ($this->cache) {
             $cacheConfig = Config::Data('app')['cache'];
             $memcached = new Memcached();
@@ -228,65 +271,43 @@ class DBI
 
             $keys = hash('ripemd160', $this->query);
             $item = $memcached->get($keys);
-
             if ($item) {
                 return $item;
-            } else {
-                $parameters = func_get_args();
-                $argCount = count($parameters);
-                $this->queryParams = $parameters;
-                if ($argCount > 0) {
-                    $this->query = preg_replace_callback(
-                        $this->queryPattern,
-                        array($this, 'queryPrepareSelect'),
-                        $this->query
-                    );
-                }
-                try {
-                    $statement = self::$dbi->prepare($this->query);
-                    if ($argCount > 0) {
-                        $statement->execute($parameters);
-                    } else {
-                        $statement->execute();
-                    }
-                    //doing memcached storage
-                    $memcached->set($keys, $statement->fetchAll(PDO::FETCH_ASSOC),
-                        isset($cacheConfig['expire']) ? $cacheConfig['expire'] : 10
-                    );
-                    return $memcached->get($keys);
+            }
+        }
 
-                } catch (PDOException $ex) {
-                    self::$dbi = null;
-                    $this->notify('Database error: ' . $ex->getMessage(), $this->query, $ex->getTrace());
-                    throw new Exception('Database error: ' . $ex->getMessage());
-                }
-            }
-        } else {
-            $parameters = func_get_args();
-            $argCount = count($parameters);
-            $this->queryParams = $parameters;
+        $parameters = func_get_args();
+        $argCount = count($parameters);
+        $this->queryParams = $parameters;
+        if ($argCount > 0) {
+            $this->query = preg_replace_callback(
+                $this->queryPattern,
+                array($this, 'queryPrepareSelect'),
+                $this->query
+            );
+        }
+        try {
+            $statement = self::$dbi->prepare($this->query);
             if ($argCount > 0) {
-                $this->query = preg_replace_callback(
-                    $this->queryPattern,
-                    array($this, 'queryPrepareSelect'),
-                    $this->query
-                );
+                $statement->execute($parameters);
+            } else {
+                $statement->execute();
             }
-            try {
-                $statement = self::$dbi->prepare($this->query);
-                if ($argCount > 0) {
-                    $statement->execute($parameters);
-                } else {
-                    $statement->execute();
-                }
-                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                self::$dbi = null;
-                return $result;
-            } catch (PDOException $ex) {
-                self::$dbi = null;
-                $this->notify('Database error: ' . $ex->getMessage(), $this->query, $ex->getTrace());
-                throw new Exception('Database error: ' . $ex->getMessage());
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+            self::$dbi = null;
+
+            if ($this->cache) {
+                //doing memcached storage
+                $memcached->set($keys, $statement->fetchAll(PDO::FETCH_ASSOC), $this->cacheExpiry);
+                return $memcached->get($keys);
             }
+
+            return $result;
+
+        } catch (PDOException $ex) {
+            self::$dbi = null;
+            $this->notify('Database error: ' . $ex->getMessage(), $this->query, $ex->getTrace());
+            throw new Exception('Database error: ' . $ex->getMessage());
         }
     }
 

@@ -49,7 +49,7 @@ class Routes
      * @var array
      * store routes file path
      */
-    var $routesFile;
+    var $sourceFile;
 
     /**
      * @var string
@@ -94,6 +94,7 @@ class Routes
 
         if (Framework::$factory->getEnvironment() === 'MAINTENANCE') {
             $this->Mapping($this->maintenance, []);
+            return true;
         }
 
         $temp = explode('?', $requestUrl);

@@ -22,8 +22,6 @@ use satframework\Response;
 class DocsEngine
 {
 
-    var $target_class;
-
     /**
      * @var Value
      */
