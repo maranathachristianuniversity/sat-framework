@@ -2,7 +2,7 @@
   "name": "maranathachristianuniversity/sat-framework",
   "description": "PHP MVC framework for quick and fast PHP application development",
   "type": "framework",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "authors": [
     {
@@ -20,12 +20,7 @@
   ],
   "require": {
     "php": ">=7.0",
-    "velliz/pte": "0.2.1",
-    "ext-openssl": "*",
-    "ext-json": "*",
-    "ext-pdo": "*",
-    "ext-memcached": "*",
-    "ext-curl": "*"
+    "velliz/pte": "0.2.1"
   },
   "require-dev": {
     "phpunit/phpunit": "^6"
