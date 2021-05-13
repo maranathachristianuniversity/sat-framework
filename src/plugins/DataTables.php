@@ -164,7 +164,9 @@ class DataTables
 
         if ($this->search_terms !== null) {
             for ($i = 0; $i < count($this->column_names); $i++) {
-                $this->search_array[] = "{$this->column_names[$i]} LIKE '%{$this->search_terms}%'";
+                //sql query workarounds for search single quotes
+                $st = str_replace("'", "\'", $this->search_terms);
+                $this->search_array[] = "{$this->column_names[$i]} LIKE '%{$st}%'";
             }
         }
 
