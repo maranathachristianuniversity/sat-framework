@@ -183,7 +183,7 @@ class DBI
         $insert_text = $insert_text . $value_string . ");";
 
         try {
-            $statement = self::$dbi->prepare($insert_text);
+            $statement = self::$dbi->prepare(self::$dbi->quote($insert_text));
             foreach ($keys as $no => $key) {
                 $statement->bindValue(':' . $key, $values[$no]);
             }
@@ -229,7 +229,7 @@ class DBI
         }
         $del_text = substr($del_text, 0, -4);
         try {
-            $statement = self::$dbi->prepare($del_text);
+            $statement = self::$dbi->prepare(self::$dbi->quote($del_text));
             $result = $statement->execute();
             self::$dbi = null;
             return $result;
@@ -261,7 +261,7 @@ class DBI
         $key_where = substr($key_where, 0, -4);
         $update_text .= " " . $key_string . $key_where;
         try {
-            $statement = self::$dbi->prepare($update_text);
+            $statement = self::$dbi->prepare(self::$dbi->quote($update_text));
             foreach ($array as $key => $val) {
                 $statement->bindValue(':' . $key, $val);
             }
@@ -308,7 +308,7 @@ class DBI
             );
         }
         try {
-            $statement = self::$dbi->prepare($this->query);
+            $statement = self::$dbi->prepare(self::$dbi->quote($this->query));
             if ($argCount > 0) {
                 $statement->execute($parameters);
             } else {
@@ -345,7 +345,7 @@ class DBI
             $this->query = preg_replace_callback($this->queryPattern, array($this, 'queryPrepareSelect'), $this->query);
         }
         try {
-            $statement = self::$dbi->prepare($this->query);
+            $statement = self::$dbi->prepare(self::$dbi->quote($this->query));
             if ($argCount > 0) {
                 $statement->execute($parameters);
             } else {
@@ -375,7 +375,7 @@ class DBI
             $this->query = preg_replace_callback($this->queryPattern, array($this, 'queryPrepareSelect'), $this->query);
         }
         try {
-            $statement = self::$dbi->prepare($this->query);
+            $statement = self::$dbi->prepare(self::$dbi->quote($this->query));
             if ($argCount > 0) {
                 $result = $statement->execute($parameters);
                 self::$dbi = null;
