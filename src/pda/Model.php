@@ -40,7 +40,7 @@ class Model
     /**
      * @var array
      */
-    private $_specs = array();
+    private $_specs = [];
 
     /**
      * @var string
@@ -108,7 +108,7 @@ class Model
     {
         $insert = array();
         foreach ($this->_specs as $key => $val) {
-            foreach ($val as $k => $v) {
+            foreach ($val as $v) {
                 $skip = false;
                 if (strpos($v['datatype'], 'auto_increment') !== false) {
                     $skip = true;
@@ -132,7 +132,7 @@ class Model
     {
         $insert = array();
         foreach ($this->_specs as $key => $val) {
-            foreach ($val as $k => $v) {
+            foreach ($val as $v) {
                 $skip = false;
                 if (strpos($v['datatype'], 'auto_increment') !== false) {
                     $skip = true;
@@ -154,7 +154,7 @@ class Model
      */
     public function remove()
     {
-        DBI::Prepare($this->_table, $this->_database)->Delete(array($this->_primary => $this->{$this->_primary}));
+        DBI::Prepare($this->_table, $this->_database)->Delete([$this->_primary => $this->{$this->_primary}]);
     }
 
     /**
@@ -164,12 +164,8 @@ class Model
      * @return array
      * @throws Exception
      */
-    public function ModelParser($raw_docs)
+    public function ModelParser($raw_docs): array
     {
-        $clause = null;
-        $command = null;
-        $value = null;
-
         $data = array();
 
         preg_match_all('(#[ a-zA-Z0-9-:.+/_()]+)', $raw_docs, $result, PREG_PATTERN_ORDER);

@@ -33,10 +33,6 @@ class Bearer
 
     public static $bearerObject;
 
-    /**
-     * Bearer constructor.
-     * @param Auth $authentication
-     */
     private function __construct(Auth $authentication)
     {
         if (is_object(self::$bearerObject)) {
@@ -55,10 +51,6 @@ class Bearer
         $this->authentication = $authentication;
     }
 
-    /**
-     * @param Auth $authentication
-     * @return Bearer
-     */
     public static function Get(Auth $authentication)
     {
         if (is_object(self::$bearerObject)) {
@@ -67,10 +59,6 @@ class Bearer
         return self::$bearerObject = new Bearer($authentication);
     }
 
-    /**
-     * @param $string
-     * @return string
-     */
     private function Encrypt($string)
     {
         $key = hash('sha256', $this->key);
@@ -79,10 +67,6 @@ class Bearer
         return base64_encode($output);
     }
 
-    /**
-     * @param $string
-     * @return false|string
-     */
     private function Decrypt($string)
     {
         $key = hash('sha256', $this->key);
@@ -90,9 +74,6 @@ class Bearer
         return openssl_decrypt(base64_decode($string), $this->method, $key, 0, $iv);
     }
 
-    /**
-     * @return bool
-     */
     public static function Is()
     {
         $data = Request::getBearerToken();
@@ -114,7 +95,7 @@ class Bearer
     public function Login($username, $password)
     {
         $loginObject = $this->authentication->Login($username, $password);
-        if (!$loginObject instanceof SatAuth) {
+        if (!$loginObject instanceof PukoAuth) {
             return false;
         }
         if ($loginObject->secure === null) {
@@ -126,15 +107,12 @@ class Bearer
             'secure' => $loginObject->secure,
             'permission' => $loginObject->permission,
             'generated' => $date->format('Y-m-d H:i:s'),
-            'expired' => $date->modify("+{$this->expired} day")->format('Y-m-d H:i:s')
+            'expired' => $date->modify("+{$this->expired} minutes")->format('Y-m-d H:i:s')
         );
         $secure = $this->Encrypt(json_encode($data));
         return $secure;
     }
 
-    /**
-     * @return bool
-     */
     public function Logout()
     {
         return true;
@@ -154,11 +132,14 @@ class Bearer
         if ($data['expired'] !== '') {
             $date = DateTime::createFromFormat('Y-m-d H:i:s', $data['expired']);
             if ($date < new DateTime()) {
-                throw new Exception($this->expiredText);
+                if ($this->expired > 0) {
+                    throw new Exception($this->expiredText);
+                }
             }
         }
 
         return $this->authentication->GetLoginData($data['secure'], $data['permission']);
     }
     #end region authentication
+
 }
