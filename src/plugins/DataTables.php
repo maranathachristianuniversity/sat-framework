@@ -89,8 +89,11 @@ class DataTables
         $this->draw = Request::Post('draw', 0);
 
         //order pointer
-        $this->order_index = $_POST['order'][0]['column'];
-        $this->order_dir = $_POST['order'][0]['dir'];
+        $order = isset($_POST['order']) && is_array($_POST['order']) ? $_POST['order'] : array();
+        if (!empty($order)) {
+            $this->order_index = $order[0]['column'];
+            $this->order_dir = $order[0]['dir'];
+        }
 
         //page length pointer
         $this->start = $_POST['start'];
