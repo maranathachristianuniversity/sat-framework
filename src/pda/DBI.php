@@ -354,10 +354,12 @@ class DBI
         try {
             $statement = self::$dbi->prepare($this->query);
             if ($args > 0) {
-                $result = $statement->execute($parameters);
+                $statement->execute($parameters);
             } else {
-                $result = $statement->execute();
+                $statement->execute();
             }
+            $result = $statement->fetchAll();
+            
             self::$dbi = null;
 
             return $result;
