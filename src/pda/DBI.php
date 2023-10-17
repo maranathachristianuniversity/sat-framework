@@ -378,7 +378,7 @@ class DBI
                 $parameters = $flatern;
             }
         }
-        
+
         $args = count($parameters);
         if ($args > 0) {
             $this->query = preg_replace_callback($this->queryPattern, array($this, '_query_prepare_select'), $this->query);
@@ -392,7 +392,51 @@ class DBI
                 $statement->execute();
             }
             $result = $statement->fetchAll();
-            
+
+            self::$dbi = null;
+
+            return $result;
+        } catch (PDOException $ex) {
+            self::$dbi = null;
+
+            $this->notify("Database error: {$ex->getMessage()}", $this->query, $ex->getTrace());
+            throw new Exception("Database error: {$ex->getMessage()}");
+        }
+    }
+
+    /**
+     * @return mixed|null
+     * @throws Exception
+     * @desc just run the query without result sets
+     */
+    public function RunNative()
+    {
+        $parameters = func_get_args();
+
+        //flatern array parameter
+        $flatern = [];
+        if (isset($parameters[0])) {
+            if (is_array($parameters[0])) {
+                foreach ($parameters[0] as $key => $item) {
+                    $flatern[$key] = $item;
+                }
+                $parameters = $flatern;
+            }
+        }
+
+        $args = count($parameters);
+        if ($args > 0) {
+            $this->query = preg_replace_callback($this->queryPattern, array($this, '_query_prepare_select'), $this->query);
+        }
+
+        try {
+            $statement = self::$dbi->prepare($this->query);
+            if ($args > 0) {
+                $result = $statement->execute($parameters);
+            } else {
+                $result = $statement->execute();
+            }
+
             self::$dbi = null;
 
             return $result;
