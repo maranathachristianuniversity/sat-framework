@@ -363,6 +363,7 @@ class DBI
     /**
      * @return mixed|null
      * @throws Exception
+     * @desc Run SQL Statement with results.
      */
     public function Run()
     {
@@ -407,7 +408,8 @@ class DBI
     /**
      * @return mixed|null
      * @throws Exception
-     * @desc just run the query without result sets
+     * @deprecated
+     * @desc Run SQL Statement without results.
      */
     public function RunNative()
     {
