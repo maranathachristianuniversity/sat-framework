@@ -151,7 +151,7 @@ class Session
     public function Login($username, $password)
     {
         $loginObject = $this->authentication->Login($username, $password);
-        if (!$loginObject instanceof PukoAuth) {
+        if (!$loginObject instanceof SatAuth) {
             return false;
         }
         if ($loginObject->secure === null) {

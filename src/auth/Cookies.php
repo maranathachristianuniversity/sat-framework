@@ -141,8 +141,8 @@ class Cookies
     public function Login($username, $password)
     {
         $loginObject = $this->authentication->Login($username, $password);
-        if (!$loginObject instanceof PukoAuth) {
-            throw new Exception('Auth must be object of PukoAuth instance');
+        if (!$loginObject instanceof SatAuth) {
+            throw new Exception('Auth must be object of SatAuth instance');
         }
         if ($loginObject->secure === null) {
             return false;

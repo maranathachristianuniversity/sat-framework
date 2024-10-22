@@ -24,7 +24,7 @@ class SatAuth
     var $permission;
 
     /**
-     * PukoAuth constructor.
+     * SatAuth constructor.
      * @param $secure
      * @param $permission
      */
