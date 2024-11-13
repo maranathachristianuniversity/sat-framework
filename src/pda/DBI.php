@@ -316,6 +316,57 @@ class DBI
     }
 
     /**
+     * @return array
+     * @throws Exception
+     */
+    public function GetRowSet(): array
+    {
+        $parameters = func_get_args();
+
+        // Flatten array parameter
+        $flatern = [];
+        if (isset($parameters[0])) {
+            if (is_array($parameters[0])) {
+                foreach ($parameters[0] as $key => $item) {
+                    $flatern[$key] = $item;
+                }
+                $parameters = $flatern;
+            }
+        }
+
+        $args = count($parameters);
+        if ($args > 0) {
+            $this->query = preg_replace_callback($this->queryPattern, array($this, '_query_prepare_select'), $this->query);
+        }
+        try {
+            $statement = self::$dbi->prepare($this->query);
+            if ($args > 0) {
+                $statement->execute($parameters);
+            } else {
+                $statement->execute();
+            }
+
+            $allResults = []; // Array to store all result sets
+
+            do {
+                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+                if ($result) {
+                    $allResults[] = $result;
+                }
+            } while ($statement->nextRowset()); // Move to the next result set
+
+            self::$dbi = null;
+
+            return $allResults; // Return all result sets as an array of arrays
+        } catch (PDOException $ex) {
+            self::$dbi = null;
+
+            $this->notify("Database error: {$ex->getMessage()}", $this->query, $ex->getTrace());
+            throw new Exception("Database error: {$ex->getMessage()}");
+        }
+    }
+
+    /**
      * @return mixed|null
      * @throws Exception
      */
